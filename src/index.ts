@@ -66,6 +66,30 @@ app.get('/users/', async (req, res) => {
 
 });
 
+app.get('/stats/', async (req, res) => {
+    console.log("END POINT /stats")
+
+    try{
+        let query = `select * from users INNER join medallas on medallas.id = users.id_medallas;`
+        let db_response = await db.query(query)
+
+        console.log(db_response.rows[0])
+
+        if(db_response.rows.length > 0){
+            console.log(`User encontrado: ${db_response.rows[0]}`)
+            res.json(db_response.rows[0]);
+        } else {
+            console.log("usuario no encontrado")
+            res.json("user no encontrado pringado")
+        }
+
+    }catch (err){
+        console.error(err)
+        res.status(500).send("internal error")
+    }
+
+});
+
 app.post('/crear' , jsonParser , async (req, res) => {
     console.log("end point crear" + req.body)
     try{
@@ -90,6 +114,7 @@ const port = process.env.PORT || 3001;
 
 app.listen(port, () => console.log(`App listening on PORT ${port}
     ENDPOINTS:
-    -GET /usuarios/:email
+    -GET /users/
+    -GET /stats/
     -POST /crear/:email
     `));

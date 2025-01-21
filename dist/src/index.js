@@ -123,8 +123,40 @@ app.get('/users/', function (req, res) { return __awaiter(void 0, void 0, void 0
         }
     });
 }); });
-app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/stats/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("END POINT /stats");
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                query = "select * from users INNER join medallas on medallas.id = users.id_medallas;";
+                return [4 /*yield*/, db.query(query)];
+            case 2:
+                db_response = _a.sent();
+                console.log(db_response.rows[0]);
+                if (db_response.rows.length > 0) {
+                    console.log("User encontrado: " + db_response.rows[0]);
+                    res.json(db_response.rows[0]);
+                }
+                else {
+                    console.log("usuario no encontrado");
+                    res.json("user no encontrado pringado");
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                err_2 = _a.sent();
+                console.error(err_2);
+                res.status(500).send("internal error");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, db_response, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -145,8 +177,8 @@ app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, vo
                 }
                 return [3 /*break*/, 4];
             case 3:
-                err_2 = _a.sent();
-                console.log(err_2);
+                err_3 = _a.sent();
+                console.log(err_3);
                 res.status(500).send('internal Server Error');
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
@@ -154,4 +186,4 @@ app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, vo
     });
 }); });
 var port = process.env.PORT || 3001;
-app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /usuarios/:email\n    -POST /crear/:email\n    "); });
+app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/\n    -GET /stats/\n    -POST /crear/:email\n    "); });
