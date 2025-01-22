@@ -77,7 +77,31 @@ app.get('/stats/', async (req, res) => {
 
         if(db_response.rows.length > 0){
             console.log(`User encontrado: ${db_response.rows[0]}`)
-            res.json(db_response.rows[0]);
+            res.json(db_response.rows);
+        } else {
+            console.log("usuario no encontrado")
+            res.json("user no encontrado pringado")
+        }
+
+    }catch (err){
+        console.error(err)
+        res.status(500).send("internal error")
+    }
+
+});
+
+app.get('/team/', async (req, res) => {
+    console.log("END POINT /stats")
+
+    try{
+        let query = `select * from users inner join equipos on equipos.id = users.id_equipo;`
+        let db_response = await db.query(query)
+
+        console.log(db_response.rows)
+
+        if(db_response.rows.length > 0){
+            console.log(`User encontrado: ${db_response.rows}`)
+            res.json(db_response.rows);
         } else {
             console.log("usuario no encontrado")
             res.json("user no encontrado pringado")
