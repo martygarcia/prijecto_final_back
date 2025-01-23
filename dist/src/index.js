@@ -104,10 +104,10 @@ app.get('/users/', function (req, res) { return __awaiter(void 0, void 0, void 0
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
-                console.log(db_response.rows[0]);
+                console.log(db_response.rows);
                 if (db_response.rows.length > 0) {
-                    console.log("User encontrado: " + db_response.rows[0]);
-                    res.json(db_response.rows[0]);
+                    console.log("User encontrado: " + db_response.rows);
+                    res.json(db_response.rows);
                 }
                 else {
                     console.log("usuario no encontrado");
@@ -196,7 +196,7 @@ app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, vo
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "insert into usuarios values ('" + req.body.id + "', '" + req.body.name + "')";
+                query = "INSERT INTO users (email, name, id_medallas, id_estadisticas) VALUES ('" + req.body.email + "', '" + req.body.name + "', '" + req.body.id_medallas + "', '" + req.body.id_estadisticas + "')";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
@@ -217,5 +217,65 @@ app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, vo
         }
     });
 }); });
+app.post('/prueba', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, db_response, err_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("end point crear" + req.body);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                query = "insert into prueba values ('" + req.body.prueba + "');";
+                return [4 /*yield*/, db.query(query)];
+            case 2:
+                db_response = _a.sent();
+                console.log(db_response);
+                if (db_response.rowCount == 1) {
+                    res.json("Todo ha salido bien");
+                }
+                else {
+                    res.json("el registro no ha sido creado ");
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                err_5 = _a.sent();
+                console.log(err_5);
+                res.status(500).send('internal Server Error');
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, db_response, err_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("end point add_team" + req.body);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                query = "update equipos set colum";
+                return [4 /*yield*/, db.query(query)];
+            case 2:
+                db_response = _a.sent();
+                console.log(db_response);
+                if (db_response.rowCount == 1) {
+                    res.json("Todo ha salido bien");
+                }
+                else {
+                    res.json("el registro no ha sido creado ");
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                err_6 = _a.sent();
+                console.log(err_6);
+                res.status(500).send('internal Server Error');
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 var port = process.env.PORT || 3001;
-app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/\n    -GET /stats/\n    -POST /crear/:email\n    "); });
+app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/\n    -GET /stats/\n    -POST /crear/:email\n    -PUT /add_team\n\n    "); });

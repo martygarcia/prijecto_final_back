@@ -49,11 +49,11 @@ app.get('/users/', async (req, res) => {
         let query = `select * from users`
         let db_response = await db.query(query)
 
-        console.log(db_response.rows[0])
+        console.log(db_response.rows)
 
         if(db_response.rows.length > 0){
-            console.log(`User encontrado: ${db_response.rows[0]}`)
-            res.json(db_response.rows[0]);
+            console.log(`User encontrado: ${db_response.rows}`)
+            res.json(db_response.rows);
         } else {
             console.log("usuario no encontrado")
             res.json("user no encontrado pringado")
@@ -118,7 +118,47 @@ app.post('/crear' , jsonParser , async (req, res) => {
     console.log("end point crear" + req.body)
     try{
 
-        let query = `insert into usuarios values ('${req.body.id}', '${req.body.name}')`
+        let query = `INSERT INTO users (email, name, id_medallas, id_estadisticas) VALUES ('${req.body.email}', '${req.body.name}', '${req.body.id_medallas}', '${req.body.id_estadisticas}')`;
+        let db_response = await db.query(query)
+
+        console.log(db_response)
+
+        if(db_response.rowCount == 1){
+            res.json("Todo ha salido bien")
+        } else{
+            res.json("el registro no ha sido creado ")
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('internal Server Error')
+    }
+});
+
+app.post('/prueba' , jsonParser , async (req, res) => {
+    console.log("end point crear" + req.body)
+    try{
+
+        let query = `insert into prueba values ('${req.body.prueba}');`
+        let db_response = await db.query(query)
+
+        console.log(db_response)
+
+        if(db_response.rowCount == 1){
+            res.json("Todo ha salido bien")
+        } else{
+            res.json("el registro no ha sido creado ")
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('internal Server Error')
+    }
+});
+
+app.post('/add_team' , jsonParser , async (req, res) => {
+    console.log("end point add_team" + req.body)
+    try{
+
+        let query = `update equipos set colum`
         let db_response = await db.query(query)
 
         console.log(db_response)
@@ -141,4 +181,6 @@ app.listen(port, () => console.log(`App listening on PORT ${port}
     -GET /users/
     -GET /stats/
     -POST /crear/:email
+    -PUT /add_team
+
     `));
