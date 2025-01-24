@@ -160,7 +160,7 @@ app.get('/team/', function (req, res) { return __awaiter(void 0, void 0, void 0,
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log("END POINT /stats");
+                console.log("END POINT /team");
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
@@ -187,8 +187,40 @@ app.get('/team/', function (req, res) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); });
-app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/get_team/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("END POINT /get_team");
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                query = "select * from equipos";
+                return [4 /*yield*/, db.query(query)];
+            case 2:
+                db_response = _a.sent();
+                console.log(db_response.rows);
+                if (db_response.rows.length > 0) {
+                    console.log("User encontrado: " + db_response.rows);
+                    res.json(db_response.rows);
+                }
+                else {
+                    console.log("usuario no encontrado");
+                    res.json("user no encontrado pringado");
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                err_4 = _a.sent();
+                console.error(err_4);
+                res.status(500).send("internal error");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, db_response, err_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -209,8 +241,8 @@ app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, vo
                 }
                 return [3 /*break*/, 4];
             case 3:
-                err_4 = _a.sent();
-                console.log(err_4);
+                err_5 = _a.sent();
+                console.log(err_5);
                 res.status(500).send('internal Server Error');
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
@@ -218,7 +250,7 @@ app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, vo
     });
 }); });
 app.post('/prueba', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, db_response, err_5;
+    var query, db_response, err_6;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -239,8 +271,8 @@ app.post('/prueba', jsonParser, function (req, res) { return __awaiter(void 0, v
                 }
                 return [3 /*break*/, 4];
             case 3:
-                err_5 = _a.sent();
-                console.log(err_5);
+                err_6 = _a.sent();
+                console.log(err_6);
                 res.status(500).send('internal Server Error');
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
@@ -248,7 +280,7 @@ app.post('/prueba', jsonParser, function (req, res) { return __awaiter(void 0, v
     });
 }); });
 app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, db_response, err_6;
+    var query, db_response, err_7;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -256,7 +288,7 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "update equipos set colum";
+                query = "insert into equipos (poke_position1, poke_position2, poke_position3, poke_position4, poke_position5, poke_position6,\n    poke_img1, poke_img2, poke_img3, poke_img4, poke_img5, poke_img6, id_users) values (" + req.body.poke_position1 + ", " + req.body.poke_position2 + "," + req.body.poke_position3 + "," + req.body.poke_position4 + "," + req.body.poke_position5 + "," + req.body.poke_position6 + ",'" + req.body.poke_img1 + "','" + req.body.poke_img2 + "','" + req.body.poke_img3 + "','" + req.body.poke_img4 + "','" + req.body.poke_img5 + "','" + req.body.poke_img6 + "'," + req.body.id_users + ");";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
@@ -269,8 +301,8 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
                 }
                 return [3 /*break*/, 4];
             case 3:
-                err_6 = _a.sent();
-                console.log(err_6);
+                err_7 = _a.sent();
+                console.log(err_7);
                 res.status(500).send('internal Server Error');
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
@@ -278,4 +310,4 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
     });
 }); });
 var port = process.env.PORT || 3001;
-app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/\n    -GET /stats/\n    -POST /crear/:email\n    -PUT /add_team\n\n    "); });
+app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/\n    -GET /stats/\n    -GET /team/\n    -POST /add_team\n\n    "); });

@@ -91,10 +91,34 @@ app.get('/stats/', async (req, res) => {
 });
 
 app.get('/team/', async (req, res) => {
-    console.log("END POINT /stats")
+    console.log("END POINT /team")
 
     try{
         let query = `select * from users inner join equipos on equipos.id = users.id_equipo;`
+        let db_response = await db.query(query)
+
+        console.log(db_response.rows)
+
+        if(db_response.rows.length > 0){
+            console.log(`User encontrado: ${db_response.rows}`)
+            res.json(db_response.rows);
+        } else {
+            console.log("usuario no encontrado")
+            res.json("user no encontrado pringado")
+        }
+
+    }catch (err){
+        console.error(err)
+        res.status(500).send("internal error")
+    }
+
+});
+
+app.get('/get_team/', async (req, res) => {
+    console.log("END POINT /get_team")
+
+    try{
+        let query = `select * from equipos`
         let db_response = await db.query(query)
 
         console.log(db_response.rows)
@@ -158,7 +182,8 @@ app.post('/add_team' , jsonParser , async (req, res) => {
     console.log("end point add_team" + req.body)
     try{
 
-        let query = `update equipos set colum`
+        let query = `insert into equipos (poke_position1, poke_position2, poke_position3, poke_position4, poke_position5, poke_position6,
+    poke_img1, poke_img2, poke_img3, poke_img4, poke_img5, poke_img6, id_users) values (${req.body.poke_position1}, ${req.body.poke_position2},${req.body.poke_position3},${req.body.poke_position4},${req.body.poke_position5},${req.body.poke_position6},'${req.body.poke_img1}','${req.body.poke_img2}','${req.body.poke_img3}','${req.body.poke_img4}','${req.body.poke_img5}','${req.body.poke_img6}',${req.body.id_users});`
         let db_response = await db.query(query)
 
         console.log(db_response)
@@ -180,7 +205,7 @@ app.listen(port, () => console.log(`App listening on PORT ${port}
     ENDPOINTS:
     -GET /users/
     -GET /stats/
-    -POST /crear/:email
-    -PUT /add_team
+    -GET /team/
+    -POST /add_team
 
     `));
