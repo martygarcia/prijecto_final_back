@@ -123,7 +123,7 @@ app.get('/users/', function (req, res) { return __awaiter(void 0, void 0, void 0
         }
     });
 }); });
-app.get('/stats/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/stats_and_team/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -132,7 +132,7 @@ app.get('/stats/', function (req, res) { return __awaiter(void 0, void 0, void 0
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "select * from users INNER join medallas on medallas.id = users.id_medallas;";
+                query = "select * from equipos inner join users on equipos.id_users = users.id inner join medallas on medallas.id = users.id_medallas";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
@@ -187,16 +187,16 @@ app.get('/team/', function (req, res) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); });
-app.get('/get_team/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/fuego/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log("END POINT /get_team");
+                console.log("END POINT /fuego");
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "select * from equipos";
+                query = "select * from fuego";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
@@ -310,4 +310,4 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
     });
 }); });
 var port = process.env.PORT || 3001;
-app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/\n    -GET /stats/\n    -GET /team/\n    -POST /add_team\n\n    "); });
+app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/\n    -GET /stats_and_team/\n    -GET /team/\n    -POST /add_team\n    -GET /fuego\n    "); });

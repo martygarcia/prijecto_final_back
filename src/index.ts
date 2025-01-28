@@ -66,11 +66,11 @@ app.get('/users/', async (req, res) => {
 
 });
 
-app.get('/stats/', async (req, res) => {
+app.get('/stats_and_team/', async (req, res) => {
     console.log("END POINT /stats")
 
     try{
-        let query = `select * from users INNER join medallas on medallas.id = users.id_medallas;`
+        let query = `select * from equipos inner join users on equipos.id_users = users.id inner join medallas on medallas.id = users.id_medallas`
         let db_response = await db.query(query)
 
         console.log(db_response.rows[0])
@@ -114,11 +114,11 @@ app.get('/team/', async (req, res) => {
 
 });
 
-app.get('/get_team/', async (req, res) => {
-    console.log("END POINT /get_team")
+app.get('/fuego/', async (req, res) => {
+    console.log("END POINT /fuego")
 
     try{
-        let query = `select * from equipos`
+        let query = `select * from fuego`
         let db_response = await db.query(query)
 
         console.log(db_response.rows)
@@ -204,8 +204,8 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`App listening on PORT ${port}
     ENDPOINTS:
     -GET /users/
-    -GET /stats/
+    -GET /stats_and_team/
     -GET /team/
     -POST /add_team
-
+    -GET /fuego
     `));
