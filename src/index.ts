@@ -56,7 +56,7 @@ app.get('/users/', async (req, res) => {
             res.json(db_response.rows);
         } else {
             console.log("usuario no encontrado")
-            res.json("user no encontrado pringado")
+            res.json("not found")
         }
 
     }catch (err){
@@ -139,7 +139,7 @@ app.get('/fuego/', async (req, res) => {
 });
 
 app.post('/crear' , jsonParser , async (req, res) => {
-    console.log("end point crear" + req.body)
+    console.log("end point crear " + req.body)
     try{
 
         let query = `INSERT INTO users (email, name, id_medallas, id_estadisticas) VALUES ('${req.body.email}', '${req.body.name}', '${req.body.id_medallas}', '${req.body.id_estadisticas}')`;
