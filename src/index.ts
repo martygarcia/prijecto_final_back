@@ -42,11 +42,11 @@ import * as db from './db-conncection';
 //     }
 // });
 
-app.get('/users/', async (req, res) => {
+app.get('/users/:email', async (req, res) => {
     console.log("END POINT /users")
 
     try{
-        let query = `select * from users`
+        let query = `select * from users where email = '${req.params.email}'`
         let db_response = await db.query(query)
 
         console.log(db_response.rows)
@@ -55,7 +55,7 @@ app.get('/users/', async (req, res) => {
             console.log(`User encontrado: ${db_response.rows}`)
             res.json(db_response.rows);
         } else {
-            console.log("usuario no encontrado")
+            console.log(req.params.email)
             res.json("not found")
         }
 
@@ -90,11 +90,11 @@ app.get('/stats_and_team/', async (req, res) => {
 
 });
 
-app.get('/team/', async (req, res) => {
+app.get('/user_team/:email', async (req, res) => {
     console.log("END POINT /team")
 
     try{
-        let query = `select * from users inner join equipos on equipos.id = users.id_equipo;`
+        let query = `select * from equipos inner join users on users.id = equipos.id_users where users.email = '${req.params.email}'`
         let db_response = await db.query(query)
 
         console.log(db_response.rows)
@@ -138,11 +138,11 @@ app.get('/fuego/', async (req, res) => {
 
 });
 
-app.post('/crear' , jsonParser , async (req, res) => {
+app.post('/add_user' , jsonParser , async (req, res) => {
     console.log("end point crear " + req.body)
     try{
 
-        let query = `INSERT INTO users (email, name, id_medallas, id_estadisticas) VALUES ('${req.body.email}', '${req.body.name}', '${req.body.id_medallas}', '${req.body.id_estadisticas}')`;
+        let query = `INSERT INTO users (email, name) VALUES ('${req.body.email}', '${req.body.name}')`;
         let db_response = await db.query(query)
 
         console.log(db_response)
@@ -203,9 +203,11 @@ const port = process.env.PORT || 3001;
 
 app.listen(port, () => console.log(`App listening on PORT ${port}
     ENDPOINTS:
-    -GET /users/
+    -GET /users/:email
     -GET /stats_and_team/
+    -GET /user_team/
     -GET /team/
     -POST /add_team
+    -POST /add_user     
     -GET /fuego
     `));

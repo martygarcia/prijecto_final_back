@@ -91,7 +91,7 @@ var db = __importStar(require("./db-conncection"));
 //         res.status(500).send('internal Server Error')
 //     }
 // });
-app.get('/users/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/users/:email', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -100,7 +100,7 @@ app.get('/users/', function (req, res) { return __awaiter(void 0, void 0, void 0
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "select * from users";
+                query = "select * from users where email = '" + req.params.email + "'";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
@@ -110,8 +110,8 @@ app.get('/users/', function (req, res) { return __awaiter(void 0, void 0, void 0
                     res.json(db_response.rows);
                 }
                 else {
-                    console.log("usuario no encontrado");
-                    res.json("user no encontrado pringado");
+                    console.log(req.params.email);
+                    res.json("not found");
                 }
                 return [3 /*break*/, 4];
             case 3:
@@ -155,7 +155,7 @@ app.get('/stats_and_team/', function (req, res) { return __awaiter(void 0, void 
         }
     });
 }); });
-app.get('/team/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/user_team/:email', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -164,7 +164,7 @@ app.get('/team/', function (req, res) { return __awaiter(void 0, void 0, void 0,
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "select * from users inner join equipos on equipos.id = users.id_equipo;";
+                query = "select * from equipos inner join users on users.id = equipos.id_users where users.email = '" + req.params.email + "'";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
@@ -219,16 +219,16 @@ app.get('/fuego/', function (req, res) { return __awaiter(void 0, void 0, void 0
         }
     });
 }); });
-app.post('/crear', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.post('/add_user', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log("end point crear" + req.body);
+                console.log("end point crear " + req.body);
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "INSERT INTO users (email, name, id_medallas, id_estadisticas) VALUES ('" + req.body.email + "', '" + req.body.name + "', '" + req.body.id_medallas + "', '" + req.body.id_estadisticas + "')";
+                query = "INSERT INTO users (email, name) VALUES ('" + req.body.email + "', '" + req.body.name + "')";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
@@ -310,4 +310,4 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
     });
 }); });
 var port = process.env.PORT || 3001;
-app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/\n    -GET /stats_and_team/\n    -GET /team/\n    -POST /add_team\n    -GET /fuego\n    "); });
+app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/:email\n    -GET /stats_and_team/\n    -GET /user_team/\n    -GET /team/\n    -POST /add_team\n    -POST /add_user     \n    -GET /fuego\n    "); });
