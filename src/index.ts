@@ -90,7 +90,7 @@ app.get('/stats_and_team/', async (req, res) => {
 
 });
 
-app.get('/user_team/:email', async (req, res) => {
+app.get('/user_team/:email', async (req, res) => { 
     console.log("END POINT /team")
 
     try{
