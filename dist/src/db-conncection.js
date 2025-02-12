@@ -7,7 +7,7 @@ var pool = new pg_1.Pool({
     password: 'a',
     host: 'localhost',
     port: 5432,
-    database: 'Projecto_final'
+    database: 'pokemon_game'
 });
 function query(text) {
     return pool.query(text);

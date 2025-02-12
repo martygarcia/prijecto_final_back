@@ -5,7 +5,7 @@ const pool = new Pool({
     password: 'a',
     host: 'localhost',
     port: 5432,
-    database: 'Projecto_final'
+    database: 'pokemon_game'
 });
 
 export function query(text: any): any {
