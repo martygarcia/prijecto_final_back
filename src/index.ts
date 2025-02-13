@@ -2,8 +2,9 @@ import express, { json } from "express";
 const app = express();
 const cors = require('cors');
 app.use(cors());
-
 import bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
 const jsonParser = bodyParser.json()
 
 import * as db from './db-conncection';
