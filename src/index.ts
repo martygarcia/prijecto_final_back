@@ -178,6 +178,41 @@ app.post('/prueba' , jsonParser , async (req, res) => {
     }
 });
 
+app.put('/update_team', jsonParser, async (req, res) => {
+    console.log("End point /update_team", req.body); // Mejor impresión del log
+
+    try {
+        let query = `UPDATE equipos
+        SET poke_position1 = ${req.body.poke_position1}, 
+            poke_position2 = ${req.body.poke_position2}, 
+            poke_position3 = ${req.body.poke_position3}, 
+            poke_position4 = ${req.body.poke_position4}, 
+            poke_position5 = ${req.body.poke_position5},
+            poke_position6 = ${req.body.poke_position6}, 
+            poke_img1 = ${req.body.poke_img1}, 
+            poke_img2 = ${req.body.poke_img2},
+            poke_img3 = ${req.body.poke_img3}, 
+            poke_img4 = ${req.body.poke_img4}, 
+            poke_img5 = ${req.body.poke_img5}, 
+            poke_img6 = ${req.body.poke_img6}
+        WHERE id_users = ${req.body.id_users};`;
+
+        let db_response = await db.query(query);
+
+        console.log("Respuesta de la DB:", db_response);
+
+        if (db_response.rowCount == 1) {
+            res.json( "Todo se ha actualizado correctamente");
+        } else {
+            res.status(404).json("El registro no ha sido encontrado o no se actualizó" );
+        }
+    } catch (err) {
+        console.error("Error en la actualización:", err);
+        res.status(500).send("Error interno del servidor");
+    }
+});
+
+//crear logica en caso de q el registro ya existe hacer un update
 app.post('/add_team' , jsonParser , async (req, res) => {
     console.log("end point add_team" + req.body)
     try{
@@ -203,6 +238,7 @@ const port = process.env.PORT || 3001;
 
 app.listen(port, () => console.log(`App listening on PORT ${port}
     ENDPOINTS:
+    -PUT /update_team
     -GET /users/:email
     -GET /stats_and_team/
     -GET /user_team/
