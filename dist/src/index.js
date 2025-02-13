@@ -279,8 +279,39 @@ app.post('/prueba', jsonParser, function (req, res) { return __awaiter(void 0, v
         }
     });
 }); });
-app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.put('/update_team', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("End point /update_team", req.body); // Mejor impresión del log
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                query = "UPDATE equipos\n        SET poke_position1 = " + req.body.poke_position1 + ", \n            poke_position2 = " + req.body.poke_position2 + ", \n            poke_position3 = " + req.body.poke_position3 + ", \n            poke_position4 = " + req.body.poke_position4 + ", \n            poke_position5 = " + req.body.poke_position5 + ",\n            poke_position6 = " + req.body.poke_position6 + ", \n            poke_img1 = " + req.body.poke_img1 + ", \n            poke_img2 = " + req.body.poke_img2 + ",\n            poke_img3 = " + req.body.poke_img3 + ", \n            poke_img4 = " + req.body.poke_img4 + ", \n            poke_img5 = " + req.body.poke_img5 + ", \n            poke_img6 = " + req.body.poke_img6 + "\n        WHERE id_users = " + req.body.id_users + ";";
+                return [4 /*yield*/, db.query(query)];
+            case 2:
+                db_response = _a.sent();
+                console.log("Respuesta de la DB:", db_response);
+                if (db_response.rowCount == 1) {
+                    res.json("Todo se ha actualizado correctamente");
+                }
+                else {
+                    res.status(404).json("El registro no ha sido encontrado o no se actualizó");
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                err_7 = _a.sent();
+                console.error("Error en la actualización:", err_7);
+                res.status(500).send("Error interno del servidor");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+//crear logica en caso de q el registro ya existe hacer un update
+app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, db_response, err_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -301,8 +332,8 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
                 }
                 return [3 /*break*/, 4];
             case 3:
-                err_7 = _a.sent();
-                console.log(err_7);
+                err_8 = _a.sent();
+                console.log(err_8);
                 res.status(500).send('internal Server Error');
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
@@ -310,4 +341,4 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
     });
 }); });
 var port = process.env.PORT || 3001;
-app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -GET /users/:email\n    -GET /stats_and_team/\n    -GET /user_team/\n    -GET /team/\n    -POST /add_team\n    -POST /add_user     \n    -GET /fuego\n    "); });
+app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -PUT /update_team\n    -GET /users/:email\n    -GET /stats_and_team/\n    -GET /user_team/\n    -GET /team/\n    -POST /add_team\n    -POST /add_user     \n    -GET /fuego\n    "); });
