@@ -234,7 +234,8 @@ app.post('/add_team' , jsonParser , async (req, res) => {
     }
 });
 
-const port = process.env.PORT || 3001;
+// const port = process.env.PORT || 3001;
+const port = 10000;
 
 app.listen(port, () => console.log(`App listening on PORT ${port}
     ENDPOINTS:
