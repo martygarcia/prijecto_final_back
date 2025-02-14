@@ -59,12 +59,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
+var cors_1 = __importDefault(require("cors"));
+var body_parser_1 = __importDefault(require("body-parser"));
 var app = express_1.default();
-var cors = require('cors');
-app.use(cors());
-var bodyParser = require("body-parser");
-app.use(bodyParser.json());
-var jsonParser = bodyParser.json();
+app.use(cors_1.default());
+app.use(body_parser_1.default.json());
+var jsonParser = body_parser_1.default.json();
 var db = __importStar(require("./db-conncection"));
 // app.get('/hola/:nombre', (req, res) => {
 //     res.send('Hello from express and typescript, holiiiiiii: ' + req.params.nombre);
