@@ -59,10 +59,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var cors_1 = __importDefault(require("cors"));
 var app = express_1.default();
-app.use(cors_1.default());
+var cors = require('cors');
+app.use(cors());
 var bodyParser = require("body-parser");
+app.use(bodyParser.json());
 var jsonParser = bodyParser.json();
 var db = __importStar(require("./db-conncection"));
 // app.get('/hola/:nombre', (req, res) => {
@@ -279,7 +280,7 @@ app.post('/prueba', jsonParser, function (req, res) { return __awaiter(void 0, v
         }
     });
 }); });
-app.put('/update_team', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.post('/update_team', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_7;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -287,10 +288,15 @@ app.put('/update_team', jsonParser, function (req, res) { return __awaiter(void 
                 console.log("End point /update_team", req.body); // Mejor impresión del log
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                query = "UPDATE equipos\n        SET poke_position1 = " + req.body.poke_position1 + ", \n            poke_position2 = " + req.body.poke_position2 + ", \n            poke_position3 = " + req.body.poke_position3 + ", \n            poke_position4 = " + req.body.poke_position4 + ", \n            poke_position5 = " + req.body.poke_position5 + ",\n            poke_position6 = " + req.body.poke_position6 + ", \n            poke_img1 = " + req.body.poke_img1 + ", \n            poke_img2 = " + req.body.poke_img2 + ",\n            poke_img3 = " + req.body.poke_img3 + ", \n            poke_img4 = " + req.body.poke_img4 + ", \n            poke_img5 = " + req.body.poke_img5 + ", \n            poke_img6 = " + req.body.poke_img6 + "\n        WHERE id_users = " + req.body.id_users + ";";
+                _a.trys.push([1, 4, , 5]);
+                query = "delete from equipos where id_users = " + req.body.id_users;
                 return [4 /*yield*/, db.query(query)];
             case 2:
+                db_response = _a.sent();
+                console.log("se ha borrado el anterior dato");
+                query = "\n        INSERT INTO equipos (\n            poke_position1, poke_position2, poke_position3, poke_position4, poke_position5, poke_position6, \n            poke_img1, poke_img2, poke_img3, poke_img4, poke_img5, poke_img6, id_users) VALUES (\n            " + req.body.poke_position1 + ", \n            " + req.body.poke_position2 + ", \n            " + req.body.poke_position3 + ", \n            " + req.body.poke_position4 + ", \n            " + req.body.poke_position5 + ", \n            " + req.body.poke_position6 + ", \n            '" + req.body.poke_img1 + "', \n            '" + req.body.poke_img2 + "', \n            '" + req.body.poke_img3 + "', \n            '" + req.body.poke_img4 + "', \n            '" + req.body.poke_img5 + "', \n            '" + req.body.poke_img6 + "', \n            " + req.body.id_users + "\n        );";
+                return [4 /*yield*/, db.query(query)];
+            case 3:
                 db_response = _a.sent();
                 console.log("Respuesta de la DB:", db_response);
                 if (db_response.rowCount == 1) {
@@ -299,13 +305,13 @@ app.put('/update_team', jsonParser, function (req, res) { return __awaiter(void 
                 else {
                     res.status(404).json("El registro no ha sido encontrado o no se actualizó");
                 }
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 5];
+            case 4:
                 err_7 = _a.sent();
                 console.error("Error en la actualización:", err_7);
                 res.status(500).send("Error interno del servidor");
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); });
@@ -319,7 +325,7 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "insert into equipos (poke_position1, poke_position2, poke_position3, poke_position4, poke_position5, poke_position6,\n    poke_img1, poke_img2, poke_img3, poke_img4, poke_img5, poke_img6, id_users) values (" + req.body.poke_position1 + ", " + req.body.poke_position2 + "," + req.body.poke_position3 + "," + req.body.poke_position4 + "," + req.body.poke_position5 + "," + req.body.poke_position6 + ",'" + req.body.poke_img1 + "','" + req.body.poke_img2 + "','" + req.body.poke_img3 + "','" + req.body.poke_img4 + "','" + req.body.poke_img5 + "','" + req.body.poke_img6 + "'," + req.body.id_users + ");";
+                query = "INSERT INTO equipos (\n            poke_position1, poke_position2, poke_position3, poke_position4, poke_position5, poke_position6,\n            poke_img1, poke_img2, poke_img3, poke_img4, poke_img5, poke_img6, id_users\n        ) VALUES (\n            " + req.body.poke_position1 + ", " + req.body.poke_position2 + ", " + req.body.poke_position3 + ",\n            " + req.body.poke_position4 + ", " + req.body.poke_position5 + ", " + req.body.poke_position6 + ",\n            '" + req.body.poke_img1 + "', '" + req.body.poke_img2 + "', '" + req.body.poke_img3 + "',\n            '" + req.body.poke_img4 + "', '" + req.body.poke_img5 + "', '" + req.body.poke_img6 + "',\n            " + req.body.id_users + "\n        );";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
