@@ -258,7 +258,7 @@ const port = process.env.PORT || 3001;
 
 app.listen(port, () => console.log(`App listening on PORT ${port}
     ENDPOINTS:
-    -PUT /update_team
+    -POST /update_team
     -GET /users/:email
     -GET /stats_and_team/
     -GET /user_team/

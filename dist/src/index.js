@@ -347,4 +347,4 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
     });
 }); });
 var port = process.env.PORT || 3001;
-app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -PUT /update_team\n    -GET /users/:email\n    -GET /stats_and_team/\n    -GET /user_team/\n    -GET /team/\n    -POST /add_team\n    -POST /add_user     \n    -GET /fuego\n    "); });
+app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -POST /update_team\n    -GET /users/:email\n    -GET /stats_and_team/\n    -GET /user_team/\n    -GET /team/\n    -POST /add_team\n    -POST /add_user     \n    -GET /fuego\n    "); });
