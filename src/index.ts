@@ -254,6 +254,26 @@ app.post('/add_team' , jsonParser , async (req, res) => {
     }
 });
 
+app.post('/add_medals' , jsonParser , async (req, res) => {
+    console.log("end point add_medals")
+    try{
+
+        let query = `select * users where email = '${req.body.email}'`;
+        let db_response = await db.query(query)
+
+        console.log(db_response)
+
+        if(db_response.rowCount == 1){
+            res.json("Todo ha salido bien")
+        } else{
+            res.json("el registro no ha sido creado ")
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('internal Server Error')
+    }
+});
+
 const port = process.env.PORT || 3001;
 
 app.listen(port, () => console.log(`App listening on PORT ${port}
