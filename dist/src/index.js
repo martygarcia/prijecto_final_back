@@ -360,7 +360,8 @@ app.post('/add_medals', jsonParser, function (req, res) { return __awaiter(void 
             case 2:
                 db_response = _a.sent();
                 console.log(db_response);
-                if (db_response) {
+                if (db_response.rowCount == 1) {
+                    console.log(db_response.rows);
                     res.json("Se han añadido las medallas");
                 }
                 else {
