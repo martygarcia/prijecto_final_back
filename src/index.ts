@@ -258,15 +258,19 @@ app.post('/add_medals' , jsonParser , async (req, res) => {
     console.log("end point add_medals")
     try{
 
-        let query = `select * users where email = '${req.body.email}'`;
+        let query = `
+        UPDATE users SET id_medallas = ${req.body.medals} WHERE email = '${req.body.email}';`;
+
+        // query = "UPDATE users SET id_medallas = 2 WHERE email = 'amartinezgarcia277@gmail.com';"
+
         let db_response = await db.query(query)
 
         console.log(db_response)
 
-        if(db_response.rowCount == 1){
-            res.json("Todo ha salido bien")
+        if(db_response){
+            res.json("Se han añadido las medallas")
         } else{
-            res.json("el registro no ha sido creado ")
+            res.json("db_response no ha sido encontrado ")
         }
     } catch (err) {
         console.log(err)
@@ -278,6 +282,7 @@ const port = process.env.PORT || 3001;
 
 app.listen(port, () => console.log(`App listening on PORT ${port}
     ENDPOINTS:
+    -POST /add_medals
     -POST /update_team
     -GET /users/:email
     -GET /stats_and_team/

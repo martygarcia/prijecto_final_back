@@ -346,5 +346,35 @@ app.post('/add_team', jsonParser, function (req, res) { return __awaiter(void 0,
         }
     });
 }); });
+app.post('/add_medals', jsonParser, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, db_response, err_9;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("end point add_medals");
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                query = "\n        UPDATE users SET id_medallas = " + req.body.medals + " WHERE email = '" + req.body.email + "';";
+                return [4 /*yield*/, db.query(query)];
+            case 2:
+                db_response = _a.sent();
+                console.log(db_response);
+                if (db_response) {
+                    res.json("Se han añadido las medallas");
+                }
+                else {
+                    res.json("db_response no ha sido encontrado ");
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                err_9 = _a.sent();
+                console.log(err_9);
+                res.status(500).send('internal Server Error');
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 var port = process.env.PORT || 3001;
-app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -POST /update_team\n    -GET /users/:email\n    -GET /stats_and_team/\n    -GET /user_team/\n    -GET /team/\n    -POST /add_team\n    -POST /add_user     \n    -GET /fuego\n    "); });
+app.listen(port, function () { return console.log("App listening on PORT " + port + "\n    ENDPOINTS:\n    -POST /add_medals\n    -POST /update_team\n    -GET /users/:email\n    -GET /stats_and_team/\n    -GET /user_team/\n    -GET /team/\n    -POST /add_team\n    -POST /add_user     \n    -GET /fuego\n    "); });
