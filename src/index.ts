@@ -268,7 +268,7 @@ app.post('/add_medals' , jsonParser , async (req, res) => {
         console.log(db_response)
 
         if(db_response.rowCount == 1){
-            console.log(db_response.rows)
+            console.log(db_response.rowCount)
             res.json("Se han añadido las medallas")
         } else{
             res.json("db_response no ha sido encontrado ")
