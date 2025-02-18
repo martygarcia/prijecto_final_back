@@ -133,7 +133,7 @@ app.get('/stats_and_team/', function (req, res) { return __awaiter(void 0, void 
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "select * from equipos inner join users on equipos.id_users = users.id inner join medallas on medallas.id = users.id_medallas";
+                query = "select * from equipos inner join users on equipos.id_users = users.id order by id_medallas DESC";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
@@ -188,7 +188,7 @@ app.get('/user_team/:email', function (req, res) { return __awaiter(void 0, void
         }
     });
 }); });
-app.get('/fuego/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/level/:tipo', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, db_response, err_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -197,7 +197,7 @@ app.get('/fuego/', function (req, res) { return __awaiter(void 0, void 0, void 0
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "select * from fuego";
+                query = "select * from " + req.params.tipo;
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();
@@ -229,7 +229,7 @@ app.post('/add_user', jsonParser, function (req, res) { return __awaiter(void 0,
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                query = "INSERT INTO users (email, name) VALUES ('" + req.body.email + "', '" + req.body.name + "')";
+                query = "INSERT INTO users (email, name, id_medallas) VALUES ('" + req.body.email + "', '" + req.body.name + "', " + req.body.medals + ") ";
                 return [4 /*yield*/, db.query(query)];
             case 2:
                 db_response = _a.sent();

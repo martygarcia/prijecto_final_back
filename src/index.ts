@@ -71,7 +71,7 @@ app.get('/stats_and_team/', async (req, res) => {
     console.log("END POINT /stats")
 
     try{
-        let query = `select * from equipos inner join users on equipos.id_users = users.id inner join medallas on medallas.id = users.id_medallas`
+        let query = `select * from equipos inner join users on equipos.id_users = users.id order by id_medallas DESC`
         let db_response = await db.query(query)
 
         console.log(db_response.rows[0])
@@ -115,11 +115,11 @@ app.get('/user_team/:email', async (req, res) => {
 
 });
 
-app.get('/fuego/', async (req, res) => {
+app.get('/level/:tipo', async (req, res) => {
     console.log("END POINT /fuego")
 
     try{
-        let query = `select * from fuego`
+        let query = `select * from ${req.params.tipo}`
         let db_response = await db.query(query)
 
         console.log(db_response.rows)
@@ -143,7 +143,7 @@ app.post('/add_user' , jsonParser , async (req, res) => {
     console.log("end point crear " + req.body)
     try{
 
-        let query = `INSERT INTO users (email, name) VALUES ('${req.body.email}', '${req.body.name}')`;
+        let query = `INSERT INTO users (email, name, id_medallas) VALUES ('${req.body.email}', '${req.body.name}', ${req.body.medals}) `;
         let db_response = await db.query(query)
 
         console.log(db_response)
