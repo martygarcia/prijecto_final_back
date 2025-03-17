@@ -8,7 +8,7 @@ import { Pool } from 'pg';
 //     database: 'pokemon_game'
 // });
 
-const connectionString = 'postgresql://proyecto_final_c467_user:DCM0TNCwjZ0tfP0qky0OTIwThOWRyqfT@dpg-cum64u0gph6c73dbu140-a/proyecto_final_c467'
+const connectionString = 'postgresql://db_pokemon_0185_user:rIam8zleC8MVGH4klYF7wraQXVEwJQ6Q@dpg-cvbkg1tsvqrc73c8tv0g-a/db_pokemon_0185'
 
 const pool = new Pool({
     connectionString,
