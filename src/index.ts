@@ -143,7 +143,7 @@ app.post('/add_user' , jsonParser , async (req, res) => {
     console.log("end point crear " + req.body)
     try{
 
-        let query = `INSERT INTO users (email, name, id_medallas) VALUES ('${req.body.email}', '${req.body.name}', ${req.body.medals}) `;
+        let query = `INSERT INTO users (email, name, id_medallas) VALUES ('${req.body.email}', '${req.body.name}', 0) `;
         let db_response = await db.query(query)
 
         console.log(db_response)
