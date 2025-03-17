@@ -193,7 +193,7 @@ app.post('/update_team', jsonParser, async (req, res) => {
         query = `
         INSERT INTO equipos (
             poke_position1, poke_position2, poke_position3, poke_position4, poke_position5, poke_position6, 
-            poke_img1, poke_img2, poke_img3, poke_img4, poke_img5, poke_img6,) VALUES (
+            poke_img1, poke_img2, poke_img3, poke_img4, poke_img5, poke_img6, id_users) VALUES (
             ${req.body.poke_position1}, 
             ${req.body.poke_position2}, 
             ${req.body.poke_position3}, 
@@ -206,6 +206,7 @@ app.post('/update_team', jsonParser, async (req, res) => {
             '${req.body.poke_img4}', 
             '${req.body.poke_img5}', 
             '${req.body.poke_img6}', 
+            ${req.body.id_users}
         );`;
 
         db_response = await db.query(query);
